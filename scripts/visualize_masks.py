@@ -26,8 +26,8 @@ with open('output/scenes/clevr_ref+_cogent_valA_scenes.json') as f:
         img = Image.open('output/images/valA/' + scene['image_filename'])
         # img.show()
         img = np.array(img.convert('RGB'))
-        plt.imshow(img)
-        plt.show()
+        # plt.imshow(img)
+        # plt.show()
 
         mask_pixel_num = 480*320
         gt_mask  = np.array([0]*mask_pixel_num)
@@ -37,12 +37,16 @@ with open('output/scenes/clevr_ref+_cogent_valA_scenes.json') as f:
         gt_mask |= str_to_biimg(one_obj)
         gt_mask = gt_mask.reshape((320,480)).astype(np.uint8)
 
-        im_seg = img / 2 
+        im_seg = img
         c2 = im_seg[:, :, 2]
         for ci in range(c2.shape[0]):
             for cj in range(c2.shape[1]):
                 if gt_mask[ci][cj] :
                     im_seg[ci, cj, :] = (0, 0, 180)
+        
+        bounds = scene['obj_bbox']['1']
+        im_seg[bounds[1], bounds[0], :] = (0, 0, 180)
+        im_seg[bounds[1] + bounds[3], bounds[0] + bounds[2], :] = (0, 0, 180)
 
         # Display as an image
         plt.imshow(im_seg)
