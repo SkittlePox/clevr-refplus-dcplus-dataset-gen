@@ -18,7 +18,7 @@ for shape in SHAPES:
 # print(primitive_list)
 # print(len(primitive_list))
 
-files = ['CLEVR_trainA_scenes.json', 'CLEVR_valA_scenes.json', 'CLEVR_valB_scenes.json']
+files = ['clevr_ref+_cogent_trainA_scenes.json', 'clevr_ref+_cogent_valA_scenes.json', 'clevr_ref+_cogent_valB_scenes.json']
 
 for file in files:
     with open(f'output/scenes/{file}') as f:

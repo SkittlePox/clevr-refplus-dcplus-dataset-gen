@@ -1,6 +1,6 @@
 import json
 # read a json file from the scenes directory and print the number of objects in every scene
-with open('output/scenes/CLEVR_trainA_scenes.json') as f:
+with open('output/scenes/clevr_ref+_cogent_trainA_scenes.json') as f:
     data = json.load(f)
     scenes = data['scenes']
     cumulative_object_count = 0
