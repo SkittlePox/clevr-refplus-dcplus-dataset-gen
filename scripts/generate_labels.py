@@ -1,5 +1,6 @@
 import json
 import numpy as np
+from tqdm import tqdm
 # generate training data for the 96 primitive classifiers for a propositional logic experiment
 
 # generate classifier list
@@ -23,8 +24,10 @@ files = ['clevr_ref+_cogent_trainA_scenes.json', 'clevr_ref+_cogent_valA_scenes.
 for file in files:
     with open(f'output/scenes/{file}') as f:
         data = json.load(f)
-        scenes = data['scenes'][:5]
+        scenes = data['scenes']
         labels = dict()
+
+        progress_bar = tqdm(total=len(scenes))
 
         for scene in scenes:
             fname = scene['image_filename']
@@ -37,6 +40,9 @@ for file in files:
             assert(np.sum(label) == len(objs))
 
             labels[fname] = {"96count": label.tolist()}
+            progress_bar.update(1)
+        
+        progress_bar.close()
         
         with open(f'output/labels/{file[:-11]}labels.json', 'w') as outfile:
             json.dump(labels, outfile)
